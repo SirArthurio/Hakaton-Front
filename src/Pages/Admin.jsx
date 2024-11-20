@@ -37,7 +37,7 @@ const roles = [
 ];
 
 export default function FiltroAdmin() {
-  const [selectedRole, setSelectedRole] = useState("1");
+  const [selectedRole, setSelectedRole] = useState("0");
 
   const getFilteredItems = () => {
     const selectedRoleObj = roles.find((role) => role.id === selectedRole);
@@ -46,7 +46,7 @@ export default function FiltroAdmin() {
 
   return (
     <div>
-      <div className="items-container">
+      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 m-2">
         {getFilteredItems().map((item, index) => (
           <div key={item.id} className="item">
             <Carta2 item={item} key={item.id} index={index}></Carta2>
