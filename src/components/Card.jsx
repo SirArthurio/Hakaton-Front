@@ -81,3 +81,5 @@ export const Carta2 = ({ item, index }) => (
 
 
 
+
+
