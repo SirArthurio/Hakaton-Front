@@ -18,7 +18,7 @@ const API = axios.create({
 
 const Login = () => {
   const [form, setForm] = useState({
-    user: null,
+    cedula: null,
     password: null,
   });
 
@@ -30,7 +30,7 @@ const Login = () => {
   const manejadorIniciar = (e) => {
     e.preventDefault();
 
-    if (!form.user || !form.password) {
+    if (!form.cedula || !form.password) {
       setError(true);
       setErrorMsg("Por favor, completa todos los campos.");
       return;
@@ -113,7 +113,7 @@ const Login = () => {
                   placeholder="Ingrese su usuario"
                   type="text"
                   id="username"
-                  name="user"
+                  name="cedula"
                   onChange={manejadorState}
                 />
               </div>
@@ -132,12 +132,12 @@ const Login = () => {
                 />
               </div>
             </div>
-            {/*<Link to='/LigaAtletismo'>*/}
+          
             <button type="submit" className="btn flex">
               <span>Login</span>
               <AiOutlineSwapRight className="icon"></AiOutlineSwapRight>
             </button>
-            {/*</Link>*/}
+
 
             <span className="footerDiv flex">
               Olvidaste tu contraseña? <a href="">Click Here</a>

@@ -6,6 +6,8 @@ import Eventos from "./Eventos/Eventos.jsx";
 import Register from "./Register/Register";
 import EventosCrud from "./Eventos/EventosCrud.jsx";
 import Proyectos from "./Proyectos/Proyectos.jsx";
+import Docentes from "./Usuarios/Docentes/Docentes.jsx";
+import Colaboradores from "./Usuarios/Colaboradores/Colaboradores.jsx";
 
 
 export const ConfiguracionRutas=[
@@ -37,7 +39,14 @@ export const ConfiguracionRutas=[
     path:'/Proyectos',
     element:<Proyectos/>,
   },
-  
+  {
+    path:'/Docentes',
+    element:<Docentes/>,
+  },
+  {
+    path:'/Colaboradores',
+    element:<Colaboradores/>,
+  },
  
 
 ]
