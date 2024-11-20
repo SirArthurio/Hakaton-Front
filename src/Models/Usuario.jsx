@@ -1,8 +1,8 @@
 export class Usuario {
-    constructor(id= null, nombre, correoElectronico, contrasenia, role = 0) {
+    constructor(id= null, nombre, cedula, contrasenia, role = 0) {
       this.id = id;
       this.nombre = nombre;
-      this.correoElectronico = correoElectronico;
+      this.cedula = cedula;
       this.contrasenia = contrasenia;
       this.role = role;
     }
