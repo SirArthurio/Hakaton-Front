@@ -29,41 +29,30 @@ const items = [
   },
 ];
 
-const FiltroAdmin = () => {
-  const filteredItems = items.filter((item) => item.rol === "3");
-  return (
-    <div>
-      {filteredItems.map((item, index) => (
-        <Carta2 item={item} key={item.id} index={index} />
-      ))}
-    </div>
-  );
-};
+const roles = [
+  { id: "0", rol: "director", id_items: ["5"] },
+  { id: "1", rol: "lider", id_items: ["1", "2", "3", "4", "5"] },
+  { id: "2", rol: "docente", id_items: ["4", "5"] },
+  { id: "3", rol: "colaborador", id_items: ["3"] },
+];
 
-export function Admin() {
-  const [isAdmin, setAdmin] = useState(true);
-  const getUserRole = () => {
-    if (isAdmin) return 0;
-    if (isEditor) return 1;
-    return 2;
+export default function FiltroAdmin() {
+  const [selectedRole, setSelectedRole] = useState("1");
+
+  const getFilteredItems = () => {
+    const selectedRoleObj = roles.find((role) => role.id === selectedRole);
+    return items.filter((item) => selectedRoleObj.id_items.includes(item.id));
   };
+
   return (
     <div>
-      <div className="h-1/3 m-4 p-4 bg-emerald-100 rounded-lg">
-        <h2 className="text-3xl text-center mt-2 pt-2">{getUserRole()}</h2>
-      </div>
-      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 m-2">
-        {isAdmin ? (
-          items.map((item, index) => (
-            <Carta2 item={item} key={item.id} index={index} />
-          ))
-        ) : (
-          <FiltroAdmin />
-        )}
+      <div className="items-container">
+        {getFilteredItems().map((item, index) => (
+          <div key={item.id} className="item">
+            <Carta2 item={item} key={item.id} index={index}></Carta2>
+          </div>
+        ))}
       </div>
     </div>
   );
-}
-export function entrenador() {
-  return <div>soy entrenador</div>;
 }
