@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { AcmeLogo } from "../assets/AcmeLogo";
 import { MdOutlineCircleNotifications } from "react-icons/md";
 import { cerrarSesion } from "../API/Data.jsx";
+import Admin from "../Pages/Admin.jsx";
 
 const menuItems = [
   {
@@ -36,13 +37,12 @@ const menuItems = [
     titulo: "Colaboradores",
     ref: "/Colaboradores",
   },
-
 ];
 
 export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
-  const isLogin = user !== null;
+  const isLogin = user == null;
 
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
@@ -123,7 +123,7 @@ export default function Barra() {
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>
               <DropdownItem key="Mis compras">
-              <Link to="/Proyectos/usuario">Mis Proyectos</Link>
+                <Link to="/Proyectos/usuario">Mis Proyectos</Link>
               </DropdownItem>
               <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                 Log Out
