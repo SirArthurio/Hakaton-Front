@@ -7,8 +7,25 @@ const API = axios.create({
   withCredentials: true,
 });
 
-const API_URL_Eventos = "http://localhost:3000/eventos";
-const api_Carrito = "http://localhost:3000/carrito/carrito";
+export const CrearTarea = async () => {
+  try {
+    const response = await API.post("/tareas");
+    return response.data;
+  }catch(error){
+    console.error("Error al crear una tarea");
+    return[];
+  }
+}
+export const obtenerTarea = async () => {
+  try {
+    const response = await API.get("/factura/getTarea");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener:", error);
+    return [];
+  }
+};
+// Tareas
 
 export const CrearFactura = async () => {
   try {

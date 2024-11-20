@@ -4,13 +4,13 @@ import axios from "axios";
 import { Button, Spinner } from "@nextui-org/react";
 import { ModalForm } from "../../components/Modal";
 import defaultImage from "../../assets/not_image.jpg";
-import FormularioEvento from "./FormaularioEvento";
+import FormularioEvento from "./FormaularioObjetivos";
 
-const EventosCrud = () => {
-  const API = "http://localhost:3000/eventos";
+const ObjetivosCrud = () => {
+  const API = "http://localhost:3000/Objetivo";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [nuevoEvento, setNuevoEvento] = useState({
+  const [nuevoObjetivo, setNuevoObjetivo] = useState({
     name: "",
     date: "",
     description: "",
@@ -19,7 +19,7 @@ const EventosCrud = () => {
     img: null,
   });
   const [preview, setPreview] = useState(null);
-  const [eventoEditado, setEventoEditado] = useState(null);
+  const [ObjetivoEditado, setObjetivoEditado] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const convertirFechaAFormatoDate = (fechaISO) => {
@@ -30,49 +30,49 @@ const EventosCrud = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const obtenerEventos = async () => {
+  const obtenerObjetivo = async () => {
     try {
       const res = await axios.get(API);
       if (res.status === 200) {
         setData(res.data);
       }
     } catch (error) {
-      console.error("Error al obtener los eventos:", error);
+      console.error("Error al obtener los objetivos:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    obtenerEventos();
+    obtenerObjetivo();
   }, []);
 
-  const editarEvento = (eventoId) => {
-    const evento = data.find((e) => e._id === eventoId);
-    console.log(evento);
-    if (evento) {
-      setEventoEditado(evento);
+  const editarObjetivo = (ObjetivoId) => {
+    const objetivo = data.find((e) => e._id === ObjetivoId);
+    console.log(objetivo);
+    if (objetivo) {
+      setObjetivoEditado(objetivo);
       setNuevoEvento({
-        name: evento.name,
-        date: convertirFechaAFormatoDate(evento.date),
-        description: evento.description,
-        category: evento.category,
-        place: evento.place,
+        name: objetivo.name,
+        date: convertirFechaAFormatoDate(objetivo.date),
+        description: objetivo.description,
+        category: objetivo.category,
+        place: objetivo.place,
         img: null,
       });
 
-      setPreview(evento.img[0] !== undefined ? evento.img[0].secure_url  : null);
+      setPreview(o.img[0] !== undefined ? objetivo.img[0].secure_url  : null);
       setIsModalOpen(true);
     }
   };
 
-  const actualizarEvento = async () => {
-    if (!eventoEditado) return;
+  const actualizarObjetivo = async () => {
+    if (!ObjetivoEditado) return;
 
     try {
-      const { name, date, description, category, place } = nuevoEvento;
+      const { name, date, description, category, place } = nuevoObjetivo;
 
-      const res = await axios.put(`${API}/${eventoEditado._id}`, {
+      const res = await axios.put(`${API}/${ObjetivoEditado._id}`, {
         name,
         date,
         description,
@@ -81,32 +81,32 @@ const EventosCrud = () => {
       });
 
       if (res.status === 200) {
-        const eventoActualizado = res.data;
+        const objetivoActualizado = res.data;
         setData((prevData) =>
-          prevData.map((evento) =>
-            evento._id === eventoActualizado._id ? eventoActualizado : evento
+          prevData.map((objetivo) =>
+            objetivo._id === objetivoActualizado._id ? objetivoActualizado : evento
           )
         );
         limpiarFormulario();
-        setEventoEditado(null);
+        setObjetivoEditado(null);
         setIsModalOpen(false);
       } else {
-        console.error(`Error al actualizar el evento: ${res.status}`);
+        console.error(`Error al actualizar el objetivo: ${res.status}`);
       }
     } catch (error) {
-      console.error("Error al actualizar el evento:", error);
+      console.error("Error al actualizar el objetivo:", error);
     }
   };
 
-  const agregarEvento = async () => {
+  const agregarObjetivo = async () => {
     try {
       const formData = new FormData();
-      formData.append("name", nuevoEvento.name);
-      formData.append("date", convertirFechaAFormatoDate(nuevoEvento.date));
-      formData.append("description", nuevoEvento.description);
-      formData.append("category", nuevoEvento.category);
-      formData.append("place", nuevoEvento.place);
-      if (nuevoEvento.img) formData.append("img", nuevoEvento.img);
+      formData.append("name", nuevoObjetivo.name);
+      formData.append("date", convertirFechaAFormatoDate(nuevoObjetivo.date));
+      formData.append("description", nuevoObjetivo.description);
+      formData.append("category", nuevoObjetivo.category);
+      formData.append("place", nuevoObjetivo.place);
+      if (nuevoObjetivo.img) formData.append("img", nuevoObjetivo.img);
 
       const res = await axios.post(API, formData, {
         headers: {
@@ -129,7 +129,7 @@ const EventosCrud = () => {
     limpiarFormulario();
   };
 
-  const eliminarEvento = async (eventoId) => {
+  const eliminarObjetivo = async (ObjetivoId) => {
     const confirmar = window.confirm(
       "¿Estás seguro de que quieres eliminar este evento?"
     );
@@ -140,12 +140,12 @@ const EventosCrud = () => {
       const res = await axios.delete(`${API}/${eventoId}`);
 
       if (res.status === 200) {
-        await obtenerEventos();
+        await obtenerObjetivo();
       } else {
-        console.error(`Error al eliminar el evento: ${res.status}`);
+        console.error(`Error al eliminar el objetivo: ${res.status}`);
       }
     } catch (error) {
-      console.error("Error al eliminar el evento:", error);
+      console.error("Error al eliminar el objetivo:", error);
     }
   };
 
@@ -190,10 +190,10 @@ const EventosCrud = () => {
       name: "Acciones",
       cell: (row) => (
         <>
-          <Button className="p-2 m-2" onClick={() => eliminarEvento(row._id)}>
+          <Button className="p-2 m-2" onClick={() => eliminarObjetivo(row._id)}>
             Eliminar
           </Button>
-          <Button className="p-2 m-2" onClick={() => editarEvento(row._id)}>
+          <Button className="p-2 m-2" onClick={() => editarObjetivo(row._id)}>
             Editar
           </Button>
         </>
@@ -213,7 +213,7 @@ const EventosCrud = () => {
     <div>
       <h2 className="text-center">Eventos</h2>
       <Button color="success" onPress={() => setIsModalOpen(true)}>
-        Agregar Evento
+        Agregar objetivo
       </Button>
       <ModalForm
         isOpen={isModalOpen}
