@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import { FormatoFecha } from "./FormatoFecha.jsx";
 
-
 export const Carta = ({ item, index }) => (
   <Card className="justify-center" shadow="sm" key={index} isPressable>
     <Link to={`/eventos/evento/${item._id}`}>
@@ -26,7 +25,11 @@ export const Carta = ({ item, index }) => (
           width="100%"
           height="200px"
           className="z-0 w-full h-full object-cover"
-          src={item.img && item.img.length > 0 ? item.img[0].secure_url : defaultImage}
+          src={
+            item.img && item.img.length > 0
+              ? item.img[0].secure_url
+              : defaultImage
+          }
         />
       </CardHeader>
 
@@ -47,7 +50,11 @@ export const Carta3 = ({ item, index }) => (
           width="100%"
           height="200px"
           className="z-0 w-full h-full object-cover"
-          src={item.img && item.img.length > 0 ? item.img[0].secure_url : defaultImage}
+          src={
+            item.img && item.img.length > 0
+              ? item.img[0].secure_url
+              : defaultImage
+          }
         />
       </CardHeader>
 
@@ -69,7 +76,7 @@ export const Carta2 = ({ item, index }) => (
         <Image
           shadow="sm"
           radius="lg"
-          width="100%"
+          width="300px"
           height="200px"
           className=" z-0 relative w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105  transition-all duration-500 ease-in-out"
           src={item.img}
@@ -78,6 +85,3 @@ export const Carta2 = ({ item, index }) => (
     </Link>
   </Card>
 );
-
-
-
