@@ -37,7 +37,7 @@ const roles = [
 ];
 
 export default function FiltroAdmin() {
-  const [selectedRole, setSelectedRole] = useState("0");
+  const [selectedRole, setSelectedRole] = useState("3");
 
   const getFilteredItems = () => {
     const selectedRoleObj = roles.find((role) => role.id === selectedRole);
