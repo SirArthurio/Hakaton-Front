@@ -1,86 +1,23 @@
 import "../Login/App.css";
-import axios from "axios";
 import { FaUserShield } from "react-icons/fa";
 import { GoShieldLock } from "react-icons/go";
 import { AiOutlineSwapRight } from "react-icons/ai";
-import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import video from "../../assets/login/Fondo.mp4";
 import { Link } from "react-router-dom";
-import { Usuario } from "../../Models/Usuario";
-import { UserContext } from "../../Context/UserContext";
-import Swal from "sweetalert2";
-axios.defaults.withCredentials = true;
-const API = axios.create({
-  baseURL: "http://localhost:3000", 
-  withCredentials: true,
-});
+import Nmodal from "../../components/Nmodal"
+import { useState } from "react";
+
+
 
 const Login = () => {
-  const [form, setForm] = useState({
-    user: null,
-    password: null,
-  });
-
-  const { setUser } = useContext(UserContext);
-  const [error, setError] = useState(false);
-  const [ErrorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
 
   const manejadorIniciar = (e) => {
     e.preventDefault();
-
-    if (!form.user || !form.password) {
-      setError(true);
-      setErrorMsg("Por favor, completa todos los campos.");
-      return;
-    }
-
-    API.post("/login", form)
-      .then((res) => {
-        if (res.status === 200) {
-          const user = new Usuario(
-            res.data.user.document,
-            res.data.user.name,
-            res.data.user.user,
-            res.data.user.levelUser
-          );
-
-          setUser({
-            id: user.id,
-            nombre: user.nombre,
-            role: user.role,
-          });
-
-          Swal.fire({
-            icon: "success",
-            title: "¡Se inicio se sesion compae!",
-            text: "Has cerrado sesión correctamente.",
-            confirmButtonText: "Ok",
-          })
-          navigate("/");
-        }else if (res.status === 400){
-          Swal.fire({
-            icon: "error",
-            title: "¡Hay error compae!",
-            text: "Verifica tus credenciales.",
-            confirmButtonText: "Ok",
-          })
-        }
-      })
-      .catch((error) => {
-        console.error("Login error:", error);
-        setError(true);
-        setErrorMsg("Error occurred during login. Please try again.");
-      });
-  };
-
-  const manejadorState = async (e) => {
-    await setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-    console.log(form);
+    navigate("/"); // Redirige directamente a la página principal
   };
 
   return (
@@ -88,13 +25,11 @@ const Login = () => {
       <div className="container flex">
         <div className="videoDiv">
           <video src={video} autoPlay muted loop></video>
-
           <div className="textDiv">
             <h1 className="title">HAKATON</h1>
           </div>
-
           <div className="footerDiv flex">
-            <span className="text">No tienes una cuenta?, Unetenos</span>
+            <span className="text">¿No tienes una cuenta? Únete</span>
             <Link to="/register">
               <button className="btn">Crear Cuenta</button>
             </Link>
@@ -102,19 +37,16 @@ const Login = () => {
         </div>
 
         <div className="formDiv flex">
-          
-
-          <form action="" className="form grid" onSubmit={manejadorIniciar}>
+          <form className="form grid" onSubmit={manejadorIniciar}>
             <div className="inputDiv">
               <label htmlFor="username">Usuario</label>
               <div className="input flex">
-                <FaUserShield className="icon"></FaUserShield>
+                <FaUserShield className="icon" />
                 <input
                   placeholder="Ingrese su usuario"
                   type="text"
                   id="username"
-                  name="user"
-                  onChange={manejadorState}
+                  name="cedula"
                 />
               </div>
             </div>
@@ -122,30 +54,47 @@ const Login = () => {
             <div className="inputDiv">
               <label htmlFor="password">Contraseña</label>
               <div className="input flex">
-                <GoShieldLock className="icon"></GoShieldLock>
+                <GoShieldLock className="icon" />
                 <input
                   placeholder="Ingrese su contraseña"
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
-                  onChange={manejadorState}
                 />
               </div>
             </div>
-            {/*<Link to='/LigaAtletismo'>*/}
             <button type="submit" className="btn flex">
               <span>Login</span>
-              <AiOutlineSwapRight className="icon"></AiOutlineSwapRight>
+              <AiOutlineSwapRight className="icon" />
             </button>
-            {/*</Link>*/}
-
-            <span className="footerDiv flex">
-              Olvidaste tu contraseña? <a href="">Click Here</a>
+            <span className="footerDiv flex" onClick={()=> setOpen(true)} >
+              ¿Olvidaste tu contraseña? Click aquí 
             </span>
           </form>
         </div>
       </div>
-    </div>
+
+      <Nmodal open={open} onClose={() => setOpen(false)}>
+        <div className="text-center w-56">
+          
+          <div className="mx-auto my-4 w-48">
+            <h3 className="text-lg font-black text-gray-800">Confirmar Eliminacion</h3>
+            <p className="text-sm text-gray-500">
+              Estas seguro que quieres eliminar esto?
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <button className="btn-danger w-full">Se fue</button>
+            <button
+              className="btn btn-light w-full"
+              onClick={() => setOpen(false)}
+            >
+              Aguantala
+            </button>
+          </div>
+        </div>
+      </Nmodal>
+    </div>  
   );
 };
 

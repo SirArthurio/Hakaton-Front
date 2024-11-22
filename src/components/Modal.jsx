@@ -80,14 +80,7 @@ export const ModalForm = ({
       <ModalContent>
         <ModalBody>{formulario}</ModalBody>
         <ModalFooter>
-          <Button
-            onPress={() => {
-              direccion(); // Ejecuta la función de guardado o edición
-              // onClose(); // Cierra el modal
-            }}
-          >
-            Guardar
-          </Button>
+          
           <Button onPress={onClose}>
             Cerrar
           </Button>
